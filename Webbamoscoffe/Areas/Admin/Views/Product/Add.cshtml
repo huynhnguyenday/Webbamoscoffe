@@ -1,0 +1,158 @@
+﻿@model Webbamoscoffe.Models.Drink
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/product" class="nav-link">Sản phẩm</a>
+        </li>
+    </ul>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm mới sản phẩm</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active">Thêm mới</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thông tin thêm mới sản phẩm</h3>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
+                        <div class="form-group">
+                            <label for="ProductName">Tên sản phẩm</label>
+                            @Html.TextBoxFor(x => x.name, new { @class = "form-control", @placeholder = "Tên sản phẩm" })
+                            @Html.ValidationMessageFor(x => x.name, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ProductCategory">Danh mục</label>
+                            @Html.DropDownListFor(x => x.category_id, ViewBag.Category as SelectList, "- Chọn danh mục sản phẩm -", new { @class = "form-control", @placeholder = "Danh mục" })
+                            @Html.ValidationMessageFor(x => x.category_id, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ProductImage">Ảnh đại diện</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    @Html.TextBoxFor(x => x.image, new { @id = "txtImage", @class = "form-control" })
+                                </div>
+                                <div class="input-group-append">
+                                    <input type="button" value="Tải ảnh" onclick="BrowseServer('txtImage');" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ProductDetail">Chi tiết</label>
+                            @Html.TextAreaFor(x => x.detail, new { @class = "form-control", @placeholder = "Chi tiết sản phẩm", @id = "ProductDetail" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="ProductQuantity">Số lượng</label>
+                                    @Html.TextBoxFor(x => x.quantity, new { @class = "form-control", @Value = "1" })
+                                    @Html.ValidationMessageFor(x => x.quantity, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="ProductPrice">Giá</label>
+                                    @Html.TextBoxFor(model => model.price, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.price, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="ProductSellPrice">Giá Khuyến Mãi</label>
+                                    @Html.TextBoxFor(model => model.sell_price, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.sell_price, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBoxFor(x => x.ishome, new { @class = "custom-control-input", @id = "IsHomeCheckbox", @checked = "checked" })
+                                        <label for="IsHomeCheckbox" class="custom-control-label">Hiển thị</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBoxFor(x => x.ishot, new { @class = "custom-control-input", @id = "IsHotCheckbox", @checked = "checked" })
+                                        <label for="IsHotCheckbox" class="custom-control-label">Hot</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBoxFor(x => x.issale, new { @class = "custom-control-input", @id = "IsSaleCheckbox", @checked = "checked" })
+                                        <label for="IsSaleCheckbox" class="custom-control-label">Mới</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a href="/admin/product" class="btn btn-danger">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Đồng ý</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtDetail', {
+                customConfig: '/content/ckeditor/config.js',
+                extraAllowContent: 'span',
+            });
+        });
+
+        function BrowseServer(field) {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                document.getElementById(field).value = fileUrl;
+            };
+            finder.popup();
+        }
+    </script>
+}

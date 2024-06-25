@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<style>
+    ul.account_selection {
+        width: 150px;
+    }
+
+    .product_image img {
+        width: 70%;
+        height: 250px;
+        margin: 0 40px;
+    }
+
+    .owl-carousel .owl-item img {
+        display: block;
+        width: 70%;
+        height: 223px;
+        margin-left: 40px;
+    }
+</style>
+@Html.Action("Category", "PartialView")

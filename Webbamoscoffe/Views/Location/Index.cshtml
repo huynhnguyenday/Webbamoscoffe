@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+<div class="new_arrivals">
+    <div class="container" style="margin-top: 80px">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_title new_arrivals_title">
+                    <h2>Địa chỉ chi nhánh</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 40px;">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card location-box" data-map="map1">
+                <div class="card-body">
+                    <h5 class="card-title">Bamos Linh Trung</h5>
+                    <p class="card-text">Nhấn để xem bản đồ</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card location-box" data-map="map2">
+                <div class="card-body">
+                    <h5 class="card-title">Bamos Lê Văn Việt</h5>
+                    <p class="card-text">Nhấn để xem bản đồ</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card location-box" data-map="map3">
+                <div class="card-body">
+                    <h5 class="card-title">Bamos Trần Não</h5>
+                    <p class="card-text">Nhấn để xem bản đồ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 40px">
+        <div class="col">
+            <div id="google_map">
+                <div class="map_container">
+                    <div id="map">
+                        <iframe id="map1" class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.396898185622!2d106.76477167480618!3d10.857386789296369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175272c2e4a686d%3A0x78210bb3a2acfbd0!2zQmFtb3MgQ29mZmVlIC0gTGluaCBUcnVuZywgVGjhu6cgxJDhu6ljIChPcGVuIDI0Lzcp!5e0!3m2!1svi!2s!4v1719245398416!5m2!1svi!2s" width="1110" height="450" style="border:0; display: none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                        <iframe id="map2" class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.5770941066426!2d106.78598437480593!3d10.843640489309248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527e1c97281c1%3A0x6828cef66ea104f4!2zQmFtb3MgQ29mZmVlIC0gTMOjIFh1w6JuIE9haSwgVGjhu6cgxJDhu6ljIChPcGVuIDI0Lzcp!5e0!3m2!1svi!2s!4v1719249010105!5m2!1svi!2s" width="1110" height="450" style="border:0; display: none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                        <iframe id="map3" class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2029311844135!2d106.72984707480525!3d10.79576398935416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752786a7cc97cb%3A0xcc30c86bab2eab29!2zQmFtb3MgQ29mZmVlIC0gVHLhuqduIE7Do28sIFF14bqtbiAyIChPcGVuIDI0Lzcp!5e0!3m2!1svi!2s!4v1719249048552!5m2!1svi!2s" width="1110" height="450" style="border:0; display: none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.location-box').hover(function () {
+                // Ẩn tất cả các map
+                $('.map-iframe').hide();
+
+                // Hiển thị map tương ứng
+                var mapId = $(this).data('map');
+                $('#' + mapId).show();
+            });
+        });
+    </script>
+}
+
+<style>
+    .location-box {
+        cursor: pointer;
+    }
+
+    .map-iframe {
+        display: none;
+    }
+</style>

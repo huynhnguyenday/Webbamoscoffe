@@ -1,0 +1,182 @@
+﻿@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+<style>
+    .fa-plus:before {
+        padding-left: 1rem;
+        content: "\f067";
+    }
+
+    .fa-minus:before {
+        padding-right: 1rem;
+        content: "\f068";
+    }
+
+    .table td, .table th {
+        text-align: center;
+        padding: .75rem;
+        vertical-align: middle;
+        border-top: 1px solid #e9ecef;
+    }
+
+    input {
+        width: 50px;
+        text-align: center;
+        overflow: visible;
+        list-style: none;
+    }
+</style>
+<div class="container">
+    <h2 style="margin-top:150px">Giỏ hàng của bạn</h2>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Hình ảnh</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.product_id</td>
+                                <td>@item.Drink.name</td>
+                                <td><img src="@item.Drink.image" width="50"></td>
+                                @if (item.Drink.price - item.Drink.sell_price > 0)
+                                {
+                                    <td>@item.Drink.sell_price.ToString("#,##0 đ")</td>
+                                    <td class="quantity_selector">
+                                        <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        <input type="number" id="quantity_@item.product_id" value="@item.quantity" min="1" class="quantity_input">
+                                        <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    </td>
+                                    <td class="item-total" id="total_@item.product_id">@((item.Drink.sell_price * item.quantity).ToString("#,##0 đ"))</td>
+                                }
+                                else
+                                {
+                                    <td>@item.Drink.price.ToString("#,##0 đ")</td>
+                                    <td class="quantity_selector">
+                                        <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        <input type="number" id="quantity_@item.product_id" value="@item.quantity" min="1" class="quantity_input">
+                                        <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    </td>
+                                    <td class="item-total" id="total_@item.product_id">@((item.Drink.price * item.quantity).ToString("#,##0 đ"))</td>
+                                }
+                                <td>
+                                    <form method="post" action="@Url.Action("RemoveFromCart", "Cart")">
+                                        <input type="hidden" name="id" value="@item.product_id" />
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <a href="@Url.Action("Index", "ProductMain")" class="btn btn-secondary">Tiếp tục mua hàng</a>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="@Url.Action("Checkout", "Cart")" class="btn btn-primary">Thanh toán</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <p>Giỏ hàng của bạn hiện đang trống.</p>
+            <a href="@Url.Action("Index", "ProductMain")">Tiếp tục mua hàng</a>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.quantity_selector').each(function () {
+                var productId = $(this).find('.quantity_input').attr('id').replace('quantity_', '');
+                var quantityInput = $(this).find('.quantity_input');
+
+                $(this).find('.plus').on('click', function () {
+                    var quantity = parseInt(quantityInput.val());
+                    quantity++;
+                    quantityInput.val(quantity);
+                    updateCartItemQuantity(productId, quantity);
+                });
+
+                $(this).find('.minus').on('click', function () {
+                    var quantity = parseInt(quantityInput.val());
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityInput.val(quantity);
+                        updateCartItemQuantity(productId, quantity);
+                    }
+                });
+
+                quantityInput.on('change', function () {
+                    var quantity = parseInt($(this).val());
+                    if (quantity < 1) {
+                        quantity = 1;
+                        $(this).val(quantity);
+                    }
+                    updateCartItemQuantity(productId, quantity);
+                });
+            });
+
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(value).replace('₫', 'đ');
+            }
+
+            function updateCartItemQuantity(productId, quantity) {
+                var priceSpan = $('#quantity_' + productId).closest('tr').find('td:eq(3)');
+                var price = parseFloat(priceSpan.text().replace(/[^0-9.-]+/g,""));
+
+                var total = price * quantity;
+                $('#total_' + productId).text(formatCurrency(total));
+
+                // Gửi request AJAX để cập nhật số lượng trên server
+                $.ajax({
+                    url: '@Url.Action("UpdateCartItemQuantity", "Cart")',
+                    type: 'POST',
+                    data: {
+                        id: productId,
+                        quantity: quantity
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $('#total_' + productId).text(formatCurrency(response.total));
+                            console.log("Quantity updated successfully.");
+                        } else {
+                            console.error("Failed to update quantity.");
+                        }
+                    },
+                    error: function () {
+                        console.error("Error updating quantity.");
+                    }
+                });
+            }
+        });
+    </script>
+}

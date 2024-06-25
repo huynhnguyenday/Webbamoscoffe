@@ -1,0 +1,161 @@
+﻿@model List<Webbamoscoffe.Models.Category>
+@{
+    ViewBag.Title = "Danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/category" class="nav-link">Danh mục</a>
+        </li>
+    </ul>
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý danh mục</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh mục</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách danh mục</h3>
+            <div class="card-tools" style="display:flex">
+                <form action="/admin/category/Index" style="display:flex">
+                    <!-- Tìm kiếm -->
+                    <div class="search-container">
+                        <input id="Text1" type="text" name="search" placeholder="Tìm kiếm" />
+                        <i class="ri-search-line search-icon"></i>
+                    </div>
+                    <input id="Submit1" type="submit" value="Tìm kiếm" class="btn btn-primary btns" style="margin-right:30px" />
+                </form>
+                <a href="/admin/category/add" class="btn btn-primary"> Thêm mới </a>
+            </div>
+        </div>
+        <style>
+            .card-tools {
+                display: flex;
+                align-items: center;
+            }
+
+            .search-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+                height: 40px; /* Chiều cao của thanh tìm kiếm */
+            }
+
+            .search-container input[type="text"] {
+                height: 100%;
+                padding-right: 30px; /* Đảm bảo khoảng trống cho icon */
+                box-sizing: border-box;
+            }
+
+            .search-icon {
+                position: absolute;
+                right: 10px; /* Khoảng cách từ icon đến cạnh phải của input */
+                cursor: pointer;
+                pointer-events: none; /* Đảm bảo icon không chặn việc nhập văn bản */
+            }
+
+            .btns {
+                height: 40px; /* Chiều cao của nút tìm kiếm */
+                display: flex;
+                align-items: center;
+                margin-left: -5px; /* Loại bỏ khoảng trống giữa thanh tìm kiếm và nút */
+            }
+
+            form {
+                display: flex;
+            }
+        </style>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên danh mục</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr id="trow_@item.category_id">
+                                <td>@i</td>
+                                <td>@item.category_name</td>
+                                <td>
+                                    <a href="/admin/category/edit/@item.category_id" class="btn btn-sm btn-primary"> Sửa</a>
+                                    <a href="#" data-id="@item.category_id" class="btn btn-sm btn-danger btnDelete"> Xóa</a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">Không có bản ghi nào</td>
+                        </tr>
+                    }
+                </tbody>
+
+                <!-- /.card-body -->
+            </table>
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data("id");
+                var conf = confirm('Bạn có muốn xóa bản ghi này không?')
+                if (conf === true) {
+                    $.ajax({
+                        url: '/admin/category/delete',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove(); // Xóa dòng bảng khỏi DOM
+                                // Tùy chọn, làm mới trang index để cập nhật lại danh sách
+                                window.location.href = '/admin/category'; // Chuyển hướng về index
+                            }
+                        }
+                    });
+                }
+            });
+        });
+      
+    </script>
+    
+}

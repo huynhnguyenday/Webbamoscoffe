@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="12a314c389864205ad78f3c3fc33be38" Name="Diagram1" ZoomLevel="115">
+        <EntityTypeShape EntityType="WebBamosModel.Account" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Adv" Width="1.5" PointX="7.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Category" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Customer" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Deliverer" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Delivery" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Drink" Width="1.5" PointX="10" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Employee" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Order" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Order_items" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.Payment" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.post" Width="1.5" PointX="9.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebBamosModel.sysdiagram" Width="1.5" PointX="9.75" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="WebBamosModel.FK_Deliverer_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Employee_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Drink_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Order_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Delivery_Deliverer" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Delivery_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Order_items_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Payment_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="WebBamosModel.FK_Order_Drink" />
+        <EntityTypeShape EntityType="WebBamosModel.Cart" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="WebBamosModel.Cart_Item" Width="1.5" PointX="12.25" PointY="6.625" />
+        <AssociationConnector Association="WebBamosModel.FK__Cart__user_id__58D1301D" />
+        <AssociationConnector Association="WebBamosModel.FK__Cart_Item__cart___5BAD9CC8" />
+        <AssociationConnector Association="WebBamosModel.FK__Cart_Item__produ__5CA1C101" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

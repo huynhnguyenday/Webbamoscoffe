@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>BamosCoffee</title>
+    <link href="~/Content/clients/dist/img/logoadmin.png" rel="icon" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="BamosCoffee">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/bootstrap4/bootstrap.min.css">
+    <link href="~/Content/assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/responsive.css">
+
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <style>
+        ul.account_selection {
+            width: 150px;
+        }
+
+        .product_image img {
+            width: 70%;
+            height: 250px;
+            margin: 0 40px;
+        }
+
+        .owl-carousel .owl-item img {
+            display: block;
+            width: 70%;
+            height: 223px;
+            margin-left: 40px;
+        }
+    </style>
+
+    <div class="super_container">
+        <!-- Header -->
+        <header class="header trans_300">
+            <!-- Top Navigation -->
+            <div class="top_nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="top_nav_left">Tự tin là sự lựa chọn tốt nhất</div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="top_nav_right">
+                                <ul class="top_nav_menu">
+                                    <li class="account">
+                                        <a href="#">
+                                            Tài khoản
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="account_selection">
+                                            <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng nhập</a></li>
+                                            <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Đăng ký</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Main Navigation -->
+            <div class="main_nav_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <div class="logo_container">
+                                <a href="#">Bamos<span>Coffee</span></a>
+                            </div>
+                            <nav class="navbar">
+                                <!-- Navbar -->
+                                <ul class="navbar_menu">
+                                    <li>
+                                        <a href="@Url.RouteUrl("Default", new { controller = "Home", action = "Index", id = "" })">Trang chủ</a>
+                                    </li>
+                                    <li><a href="@Url.RouteUrl("Default", new { controller = "ProductMain", action = "Index", id = "" })">Thực đơn</a></li>
+
+                                    <li><a href="@Url.RouteUrl("Default", new { controller = "Location", action = "Index", id = "" })">Địa chỉ quán</a></li>
+                                    <li><a href="#">Liên hệ</a></li>
+                                </ul>
+                                <ul class="navbar_user">
+                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                    <li class="checkout">
+                                        <a href="@Url.RouteUrl("Default", new { controller = "Cart", action = "Index" })">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="checkout_items" class="checkout_items">2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="hamburger_container">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="notificationContainer" style="display: none;"></div>
+        @RenderBody()
+
+        <!-- Newsletter -->
+        <div class="newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+                            <h4>Đăng ký</h4>
+                            <p>Đăng ký để nhận ngay nhiều voucher giảm giá cực sốc</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <form action="post">
+                            <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                                <input id="newsletter_email" type="email" placeholder="Email của bạn" required="required" data-error="Valid email is required.">
+                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">Đăng ký</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+                            <ul class="footer_nav">
+                                <li><a href="contact.html">Thông tin liên hệ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer_nav_container">
+                            <div class="cr">©2018 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Group4</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    <script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/assets/styles/bootstrap4/popper.js"></script>
+    <script src="~/Content/assets/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/Content/assets/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/Content/assets/plugins/easing/easing.js"></script>
+    <script src="~/Content/assets/js/custom.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+    @*<script src="~/Scripts/jsShopping.js"></script>*@
+    <!-- Bạn có thể đặt trong phần head hoặc cuối body tùy thích -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnAddToCart', function (e) {
+                e.preventDefault();
+
+                var id = $(this).data('id');
+                var quantity = 1; // Mặc định quantity là 1 nếu không phải DetailView
+
+                // Kiểm tra nếu đang ở trang DetailView thì lấy số lượng từ form
+                if ($(this).closest('.product_details').length > 0) {
+                    quantity = parseInt($('#quantity_value').text().trim());
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Cart/AddToCart",
+                    data: { id: id, quantity: quantity },
+                    dataType: "json",
+                    success: function (response) {
+                        // Hiển thị thông báo
+                        alert(response.message);
+
+                        // Hoặc nếu muốn sử dụng modal popup
+                        // $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Có lỗi xảy ra. Vui lòng thử lại.");
+                    }
+                });
+            });
+        });
+       $(document).ready(function () {
+        // Xử lý thông báo khi xóa sản phẩm khỏi giỏ hàng
+        $('form').submit(function (e) {
+            e.preventDefault(); // Ngăn không submit form mặc định
+
+            var form = $(this);
+            var url = form.attr('action');
+            var formData = form.serialize();
+
+            $.post(url, formData)
+                .done(function (response) {
+                    if (response.success) {
+                        // Hiển thị thông báo thành công
+                        alert(response.message);
+                        // Tải lại trang sau khi sản phẩm được xóa
+                        location.reload();
+                    } else {
+                        // Hiển thị thông báo lỗi nếu cần
+                        alert(response.message);
+                    }
+                })
+                .fail(function () {
+                    alert('Đã xảy ra lỗi trong quá trình xử lý.');
+                });
+        });
+    });
+
+    </script>
+
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
