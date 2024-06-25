@@ -92,7 +92,7 @@
                                     <li class="checkout">
                                         <a href="@Url.RouteUrl("Default", new { controller = "Cart", action = "Index" })">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
+                                            <span id="checkout_items" class="checkout_items">0</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -196,6 +196,13 @@
                         // Hiển thị thông báo
                         alert(response.message);
 
+                        if (response.success) {
+                            // Cập nhật số lượng sản phẩm trong giỏ hàng
+                            var currentItemCount = parseInt($('#checkout_items').text().trim()); // Lấy và chuyển đổi sang số nguyên
+                            var newCount = currentItemCount + 1;
+                            $('#checkout_items').text(newCount); // Cập nhật lại số lượng sản phẩm trong giỏ hàng
+                        }
+
                         // Hoặc nếu muốn sử dụng modal popup
                         // $('#myModal').modal('show');
                     },
@@ -205,6 +212,7 @@
                 });
             });
         });
+
        $(document).ready(function () {
         // Xử lý thông báo khi xóa sản phẩm khỏi giỏ hàng
         $('form').submit(function (e) {

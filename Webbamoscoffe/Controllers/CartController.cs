@@ -42,8 +42,12 @@ namespace Webbamoscoffe.Controllers
                 cart.Add(new Cart_Item { product_id = id, quantity = quantity, price = product.price, Drink = product });
             }
             Session["Cart"] = cart;
-            return Json(new { success = true, message = "Sản phẩm đã được thêm vào giỏ hàng thành công." });
+
+            bool isAddedToCart = true; // Đánh dấu rằng sản phẩm đã được thêm vào giỏ hàng thành công
+
+            return Json(new { success = true, message = "Sản phẩm đã được thêm vào giỏ hàng thành công.", isAddedToCart });
         }
+
 
         [HttpPost]
         public ActionResult RemoveFromCart(int id)
